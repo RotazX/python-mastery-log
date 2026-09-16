@@ -14,3 +14,5 @@ A side effect is any change outside the function's own return value — writing 
 Why this matters, concretely: pure functions are trivial to test (call it, assert the return value), and impure ones aren't (you need a fake filesystem, which is exactly why Week 3 teaches tmp_path). It's also the reason behind your convention of logic functions at the top and printing in the __main__ block — you're deliberately keeping computation pure and pushing side effects to the edges of the program. Tonight's contact book refactor makes this visible: load_contacts() and save_contacts() are unavoidably impure because touching disk is the side effect, while a function that finds a contact in an already-loaded dict can be pure.
 
 Single responisbility means a function should answer to one kind of request.
+
+Before you write any def line again, answer two questions out loud: what exactly comes in, and what exactly goes out. If you can't answer, you don't yet know what the function is for.

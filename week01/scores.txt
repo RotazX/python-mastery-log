@@ -13,5 +13,3 @@ Karl,85
 Alice,60
 Liam,84,extra
 Mia,100
- 
- 
