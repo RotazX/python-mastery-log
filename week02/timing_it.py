@@ -1,6 +1,7 @@
 import time
 
 def linear_search(arr: list[int], nr: int) -> int:
+    print("inside linear_search")
     for i, v in enumerate(arr):
         if v == nr:
             return i
@@ -21,10 +22,21 @@ def binary_search(arr: list[int], nr: int) -> int:
     return -1
 
 if __name__ == "__main__":
-    print(linear_search([4, 8, 15, 16, 23, 42], 23))
-    print(linear_search([4, 8, 15, 16, 23, 42], 7))
+    numbers = [x for x in range(100_000)]
 
-    print(binary_search([4, 8, 15, 16, 23, 42], 23))
-    print(binary_search([4, 8, 15, 16, 23, 42], 7))
-    print(binary_search([4, 8, 15, 16, 23, 42], 4))
-    print(binary_search([4, 8, 15, 16, 23, 42], 42))
+    start = time.perf_counter()
+    v = linear_search(numbers, 90_000)
+    print(v)
+    elapsed = time.perf_counter() - start
+    print(f"Linear search time spent: {elapsed:.15f} s")
+
+    start2 = time.perf_counter()
+    v2 = binary_search(numbers, 90_000)
+    print(v2)
+    elapsed2 = time.perf_counter() - start2
+    print(f"Binary search time spent: {elapsed2:.15f} s")
+
+    # print(binary_search(numbers, 4))
+    # print(binary_search(numbers, 42))
+    
+    
