@@ -1,13 +1,13 @@
 import time
 
-def linear_search(arr: list[int], nr: int) -> int:
+def linear_search(arr: list[int], nr: int) -> int: # O(n)
     print("inside linear_search")
     for i, v in enumerate(arr):
         if v == nr:
             return i
     return -1
 
-def binary_search(arr: list[int], nr: int) -> int:
+def binary_search(arr: list[int], nr: int) -> int: # O(log n)
     low = 0
     high = len(arr) - 1
 

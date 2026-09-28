@@ -1,5 +1,5 @@
 
-def bubble_sort(numbers: list[int]) -> list[int]:
+def bubble_sort(numbers: list[int]) -> list[int]: # O(n^2))
     result = numbers.copy()
     n = len(result)
     for i in range(n - 1):

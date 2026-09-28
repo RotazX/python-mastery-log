@@ -1,7 +1,7 @@
 """Linear search vs binary search on a sorted list."""
 
 
-def linear_search(items: list[int], target: int) -> int | None:
+def linear_search(items: list[int], target: int) -> int | None: # O(n)
     """Return the index of target, checking every element in order. O(n)."""
     for index, value in enumerate(items):
         if value == target:
@@ -9,7 +9,7 @@ def linear_search(items: list[int], target: int) -> int | None:
     return None
 
 
-def binary_search(items: list[int], target: int) -> int | None:
+def binary_search(items: list[int], target: int) -> int | None: # O(log n)
     """Return the index of target in a sorted list, halving the range each step. O(log n)."""
     # WHY THE LIST MUST BE SORTED:
     # Each step compares the target to the middle element and discards half
