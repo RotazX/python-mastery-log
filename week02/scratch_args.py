@@ -3,8 +3,7 @@ def join_messages(*messages: str) -> str:
     return " | ".join(messages)
 
 def build_profile(name: str, **fields: str) -> dict[str, str]:
-    fields["name"] = name
-    return fields
+    return {"name": name, **fields}
 
 if __name__ == "__main__":
     print(join_messages("start", "load", "done"))
