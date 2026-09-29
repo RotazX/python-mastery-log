@@ -6,9 +6,9 @@ def count_items(lists: list) -> int:
     # else: 
     for i in lists:
         if isinstance(i, list): # If class is int then with float the program crashes, and with a string you will get a recursion error.
-            count += 1
+            count += count_items(i)
         else:
-            count = count + count_items(i)
+            count += 1
     return count
 
 if __name__ == "__main__":
