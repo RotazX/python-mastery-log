@@ -1,7 +1,6 @@
 from pathlib import Path
 
-def directory(path: Path) -> list[tuple[str, int]]:
-    print(path.exists())
+def directory(path: Path) -> list[Path]:
     return sorted(path.rglob("*"))
 
 if __name__ == "__main__":
