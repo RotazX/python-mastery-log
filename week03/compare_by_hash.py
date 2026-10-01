@@ -13,15 +13,12 @@ def file_hash(file_path: Path) -> str:
 
 
 def files_are_identical(path_a: Path, path_b: Path) -> bool:
-    hash_a = file_hash(path_a)
-    hash_b = file_hash(path_b)
+    return file_hash(path_a) == file_hash(path_b)
 
-    if hash_a == hash_b:
-        return bool(True)
-    else:
-        return bool(False)
 
 
 
 if __name__ == "__main__":
-    print("Files are identical:", files_are_identical(Path("a.txt"), Path("b.txt")))
+    sandbox = Path(__file__).parent / "sandbox"
+    result = files_are_identical(sandbox / "a.txt", sandbox / "b.txt")
+    print(f"Files are identical: {result}")
