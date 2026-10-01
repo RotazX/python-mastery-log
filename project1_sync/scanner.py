@@ -1,7 +1,16 @@
+from fnmatch import fnmatch
 from pathlib import Path
 
-def scan_directory(path: Path) -> list[Path]:
-    return [p for p in path.rglob("*") if p.is_file()]
+def is_excluded(name: str, patterns: list[str]) -> bool:
+    return any(fnmatch(name, pattern) for pattern in patterns)
+
+def scan_directory(path: Path, exclude_patterns: list[str] | None = None) -> list[Path]:
+    if exclude_patterns is None:
+        exclude_patterns = []
+    return [
+        p for p in path.rglob("*")
+        if p.is_file() and not is_excluded(p.name, exclude_patterns)
+    ]
 
 def safe_resolve(base: Path, target: Path) -> Path:
     resolved_base = base.resolve()
