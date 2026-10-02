@@ -1,44 +1,52 @@
 from concurrent.futures import ThreadPoolExecutor
-import time
 from threading import Thread
+import time
 
-def fake_io(name: str, s: int, start: float) -> None:
+
+def fake_io(name: str, seconds: int, start: float) -> None:
     print(f"{name} start: {time.perf_counter() - start:.2f}s")
-    time.sleep(s)
+    time.sleep(seconds)
     print(f"{name} end: {time.perf_counter() - start:.2f}s")
 
-def run_with_pool(args: list[tuple[str, int]]) -> None:
+
+def run_sequential(tasks: list[tuple[str, int]]) -> float:
     start = time.perf_counter()
+    for name, seconds in tasks:
+        fake_io(name, seconds, start)
+    return time.perf_counter() - start
 
-    print("--- pool ---")
 
+def run_with_threads(tasks: list[tuple[str, int]]) -> float:
+    start = time.perf_counter()
+    threads = []
+    for name, seconds in tasks:
+        threads.append(Thread(target=fake_io, args=(name, seconds, start)))
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    return time.perf_counter() - start
+
+
+def run_with_pool(tasks: list[tuple[str, int]]) -> float:
+    start = time.perf_counter()
+    futures = []
     with ThreadPoolExecutor() as pool:
-        for name, s in args:
-            pool.submit(fake_io, name, s, start)
+        for name, seconds in tasks:
+            futures.append(pool.submit(fake_io, name, seconds, start))
+    for future in futures:
+        future.result()  # re-raises any exception that happened inside the task
+    return time.perf_counter() - start
 
-    print(f"Total: {time.perf_counter() - start:.2f}")
 
 if __name__ == "__main__":
-    start = time.perf_counter()
-    t = Thread(target=fake_io, args=("A", 2, start))
-    t2 = Thread(target=fake_io, args=("B", 3, start))
+    tasks = [("A", 2), ("B", 3)]
 
     print("--- sequential ---")
-    fake_io("A", 2, start)
-    fake_io("B", 3, start)
-    print(f"Total: {time.perf_counter() - start:.2f}")
-
-    start2 = time.perf_counter()
-    t3 = Thread(target=fake_io, args=("A", 2, start2))
-    t4 = Thread(target=fake_io, args=("B", 3, start2))
+    print(f"Total: {run_sequential(tasks):.2f}s")
 
     print("--- threaded ---")
-    t3.start()
-    t4.start()
-    
-    t3.join()
-    t4.join()
-    print(f"Total: {time.perf_counter() - start2:.2f}")
+    print(f"Total: {run_with_threads(tasks):.2f}s")
 
-    run_with_pool([("A", 2), ("B", 3)])
-
+    print("--- pool ---")
+    print(f"Total: {run_with_pool(tasks):.2f}s")
