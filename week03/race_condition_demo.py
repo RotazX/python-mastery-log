@@ -1,7 +1,7 @@
 from threading import Thread, Lock
 import time
 
-def run_without_lock(increments: int) -> int:
+def run_without_lock(increments: int) -> int: # CPU-bound: threading does not meaningfully speed up the work because of Python's GIL.
     counter = [0]
 
     def worker() -> None:
@@ -21,7 +21,7 @@ def run_without_lock(increments: int) -> int:
 
     return counter[0]
 
-def run_with_lock(increments: int) -> int:
+def run_with_lock(increments: int) -> int: # CPU-bound: threading does not meaningfully speed up the work because of Python's GIL.
     counter = [0]
     lock = Lock()
 

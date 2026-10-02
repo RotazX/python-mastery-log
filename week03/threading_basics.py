@@ -1,7 +1,7 @@
 import time
 from threading import Thread
 
-def fake_io(name: str, s: int, start: float) -> None:
+def fake_io(name: str, s: int, start: float) -> None: # I/O-bound: threading helps because threads can overlap waiting during sleep.
     print(f"{name} start: {time.perf_counter() - start:.2f}s")
     time.sleep(s)
     print(f"{name} end: {time.perf_counter() - start:.2f}s")

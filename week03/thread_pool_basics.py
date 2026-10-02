@@ -28,7 +28,7 @@ def run_with_threads(tasks: list[tuple[str, int]]) -> float:
     return time.perf_counter() - start
 
 
-def run_with_pool(tasks: list[tuple[str, int]]) -> float:
+def run_with_pool(tasks: list[tuple[str, int]]) -> float: # I/O-bound: threading helps because threads can overlap waiting during sleep.
     start = time.perf_counter()
     futures = []
     with ThreadPoolExecutor() as pool:
