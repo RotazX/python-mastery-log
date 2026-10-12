@@ -11,7 +11,7 @@ def binary_search(arr: list[int], target: int) -> int | None:
         if arr[mid] < target:
             low = mid + 1
         else:
-            high = mid -1
+            high = mid - 1
 
     return None
 
