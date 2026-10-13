@@ -1,12 +1,12 @@
 
-def merge_intervals(numbers: list[tuple[int, int]]) -> list[tuple[int, int]]:
-    numbers = sorted(numbers, key=lambda number: number[0])
-    merged = []
-    for i in numbers:
-        if not merged or merged[-1][1] < i[0]:
-            merged.append(i)
+def merge_intervals(intervals: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    merged: list[tuple[int, int]] = []
+    for start, end in sorted(intervals):
+        if not merged or merged[-1][1] < start:
+            merged.append((start, end))
         else: 
-            merged[-1] = (merged[-1][0], max(merged[-1][1], i[1]))
+            last_start, last_end = merged[-1]
+            merged[-1] = (last_start, max(last_end, end))
     return merged
     
 if __name__ == "__main__":
