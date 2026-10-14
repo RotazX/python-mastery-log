@@ -1,25 +1,23 @@
 
 class Node:
-    def __init__(self, value):
+    def __init__(self, value: int) -> None:
         self.value = value
         self.next = None
 
 class LinkedList:
-    def __init__(self):
+    def __init__(self) -> None:
         self.head = None
+        self.tail = None
 
     def insert(self, value):
-        if self.head is None:
-            self.head = Node(value)
-            return
+        node = Node(value)
+        if self.tail is None:
+            self.head = node
+        else:
+            self.tail.next = node
+        self.tail = node
 
-        current = self.head
-        while current.next is not None:
-            current = current.next
-
-        current.next = Node(value)
-
-    def traverse(self):
+    def traverse(self) -> list[int]:
         result = []
         current = self.head
         while current is not None:
